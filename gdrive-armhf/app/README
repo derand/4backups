@@ -1,0 +1,8 @@
+To auth on Google Drive, change line comments in "cdn.py":
+
+gdrive = GoogleDrive(credentials_manager=GDMongoCredentials(db))
+#gdrive = GoogleDrive(credentials_manager=GDFileCredentials('gdrive_credentials_tmp.json'))
+
+and go to http://localhost:5000/auth
+
+than copy content of "gdrive_credentials_tmp.json" to mongodb

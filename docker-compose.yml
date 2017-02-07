@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  mysql_backup:
+    image: "derand/backup:mysql-armhf"
+    build: mysql-armhf
+    container_name: mysql_backup
+    hostname: mysql_backup
+    restart: "on-failure:3"
+    volumes:
+      - /mnt/config/backups/mysql_credencials:/db_credencials
+      - /mnt/backup/mysql:/mnt
+    logging: &default_logging
+      driver: json-file
+      options:
+        max-size: "100k"
+        max-file: "1"
+
+  mongo_backup:
+    image: "derand/backup:mongo-armhf"
+    build: mongo-armhf
+    container_name: mongo_backup
+    hostname: mongo_backup
+    restart: "on-failure:3"
+    volumes:
+      - /mnt/config/backups/mongo_credencials:/db_credencials
+      - /mnt/backup/mongo:/mnt
+    logging: *default_logging
+
+  gdrive_backup:
+    image: "derand/backup:gdrive-armhf"
+    build: gdrive-armhf
+    container_name: gdrive_backup
+    hostname: gdrive_backup
+    restart: "on-failure:3"
+    volumes:
+      - /mnt/config/backups/gdrive_secrets.json:/app/gdrive_secrets.json
+      - /mnt/backup/gdrive:/mnt
+    logging: *default_logging
